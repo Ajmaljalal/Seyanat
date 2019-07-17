@@ -1,0 +1,251 @@
+.app {
+  text-align: center;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 50px 50px;
+  position: relative;
+  width: 94%;
+  height: 90vh;
+  background-color: #f5f5f5
+}
+
+.app-welcome {
+  color: brown;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.login {
+  width: 400px;
+  margin: 20px auto;
+  border: 1px solid gray;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 50px 50px;
+  transition: all .5s;
+  background-color: white
+  
+}
+
+.login:hover {
+  box-shadow: 1px 1px 20px gray;
+  border: 1px solid transparent
+}
+
+.login input {
+  padding: 20px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin-top: 30px;
+  font-size: 14px;
+  outline: none;
+}
+
+.login button {
+  border: none;
+  color: white;
+  background-color: black;
+  margin: 50px auto;
+  margin-bottom: 0px;
+  width: 50%;
+  padding: 20px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 5px;
+  outline:none;
+}
+
+.login button:hover {
+  border: 1px solid black;
+  background-color: lightgray;
+  color: black;
+}
+
+
+.right-menu {
+  border: 1px solid gray;
+  width: 170px;
+  border-top: 40px solid black;
+  padding: 40px 20px;
+  height: 420px;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+.right-menu .user {
+  margin-bottom: 50px;
+}
+
+.right-menu button {
+  border: none;
+  color: white;
+  background-color: black;
+  margin: 10px auto;
+  margin-bottom: 0px;
+  width: 180px;
+  padding: 15px 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 5px;
+  outline: none;
+}
+
+.right-menu button.addClient {
+  background-color: darkgreen;
+}
+
+.right-menu button.logout {
+  background-color: red;
+  color: white;
+  margin-top: 220px;
+}
+.users__list {
+  width: 85%;
+  padding: 0 0;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.list-search-w {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #f5f5f5;
+}
+
+.list-search-w input {
+  padding: 10px 20px;
+  border: 1px solid gray;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  width: 30%;
+  outline: none;
+}
+
+
+.list-table{
+  display: block;
+  width: 100%;
+
+}
+
+.table-header {
+  border: 1px solid black;
+  display: flex;
+  padding: 10px;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+}
+.table-row {
+  border: 1px solid black;
+  border-top: none;
+  display: flex;
+  padding: 10px;
+}
+.table-row:hover{
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
+.table-cell {
+  display: inline-block;
+  border-right: 1px solid black;
+  width: 10%;
+}
+
+.table-cell-no {
+
+}
+.table-cell-name {
+  width: 20%;
+}
+
+.table-cell-assignee {
+  width: 20%;
+}
+
+.add-modal-w {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top:0;
+  left: 0; 
+  background: rgba(83, 81, 81, 0.8);
+  z-index: 500;
+}
+.add-modal {
+  position: absolute;
+  z-index: 1000;
+  top: 10%;
+  left: 50%;
+  border: 1px solid black;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  /* height: 500px; */
+  transform: translateY(-50%);
+  transform: translateX(-50%);
+}
+
+.add-modal-header {
+  border-top-left-radius: 9px;
+  border-top-right-radius: 9px;
+  width: 100%;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-end;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.add-modal-form {
+  display: flex;
+  flex-direction: column;
+  margin: 40px;
+}
+
+.add-modal-form input {
+  padding: 15px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: 1px solid grey;
+  outline: none;
+}
+
+.add-modal button {
+  border: none;
+  color: white;
+  background-color: black;
+  margin: 0px auto;
+  width: 50%;
+  padding: 20px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 5px;
+  outline:none;
+  margin-bottom: 20px;
+}
+
+.form-alert {
+  margin-bottom: 20px;
+  color: red;
+}
