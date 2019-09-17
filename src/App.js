@@ -2,60 +2,39 @@ import React from 'react';
 import './styles/App.css';
 import ListView from './listView';
 import RightMenu from './rightMenu';
-import Login from './login';
+import LoginRegister from './login';
 import AddClient from './addClientModal';
+import firebaseInstance from 'firebase/app';
+import 'firebase/firestore';
+import firebaseConfigs from './firebaseConfig'
 
-
-const clients = [
-  {
-      name: 'Jamil',
-      caseNumber: '12345',
-      date: new Date(),
-      status: 'closed',
-      Assignee: 'Hakim'    
-  },
-  {
-      name: 'Khangul',
-      caseNumber: '12345',
-      date: new Date(),
-      status: 'New',
-      Assignee: 'Ajmal'    
-  },
-  {
-      name: 'Yusuf',
-      caseNumber: '12345',
-      date: new Date(),
-      status: 'New',
-      Assignee: 'Aman'    
-  },
-  {
-      name: 'Beheshta',
-      caseNumber: '12345',
-      date: new Date(),
-      status: 'Ba khod ghalteeda',
-      Assignee: 'Hakim'    
-  },
-]
-
-
-
+if (!firebaseInstance.apps.length) {
+  firebaseInstance.initializeApp(firebaseConfigs)
+}
+const db = firebaseInstance.firestore();
+db.settings({
+  timestampsInSnapshots: true
+});
 
 class App extends React.Component {
   state = {
     loggedIn: false,
-    clients: clients,
-    openAddClient: false
+    clients: null,
+    openAddClient: false,
+    currenUser: null
   }
 
-  handleLogin = () => {
+  handleLogin = (user) => {
     this.setState({
-      loggedIn: true
+      loggedIn: true,
+      currenUser: user
     })
   }
 
   handleLogout = () => {
     this.setState({
-      loggedIn: false
+      loggedIn: false,
+      currenUser: null
     })
   }
 
@@ -66,10 +45,10 @@ class App extends React.Component {
   }
 
   addClient = (client) => {
-    const newClients = this.state.clients
-    newClients.push(client)
-    this.setState({
-      clients: newClients
+    db.collection('clients').add({
+      ...client
+    }).then(user =>{
+      console.log(user)
     })
     this.openAddClientModal()
 
@@ -77,15 +56,15 @@ class App extends React.Component {
 
   renderComponents =()=> {
     return (
-      <React.Fragment>
+      <div className='app-wrapper'>
         {this.state.loggedIn ? (
-          <React.Fragment>
-            <RightMenu onLogOut={this.handleLogout} onOpenModal={this.openAddClientModal} />
-            <ListView clients={clients}/>
-          </React.Fragment>
-        ): <Login onLogIn={this.handleLogin}/>}
+          <div className='app-content'>
+            <RightMenu onLogOut={this.handleLogout} onOpenModal={this.openAddClientModal} user={this.state.currenUser} />
+            <ListView db={db} user = {this.state.currenUser}/>
+          </div>
+        ): <LoginRegister onLogIn={this.handleLogin}/>}
         {this.state.openAddClient ? <AddClient onClose={this.openAddClientModal} onAddClient={this.addClient}/> : null}
-      </React.Fragment>
+      </div>
     )
   }
   

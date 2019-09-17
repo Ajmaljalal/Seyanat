@@ -11,8 +11,8 @@ class RightMenu extends Component {
     render() {
         return (
             <div className='right-menu'>
-                <div className='user'>Welcome Name</div>
-                <button onClick={this.props.onOpenModal} className='addClient'>Add a new case</button>
+                <div className='user'>Welcome {this.props.user.email}</div>
+                <button onClick={this.props.onOpenModal} className='addClient'>New Case</button>
                 <button>Print the list</button>
                 <button onClick={this.props.onLogOut} className='logout'>Logout</button>
             </div>
