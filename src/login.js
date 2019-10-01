@@ -9,6 +9,7 @@ const firebaseAuth = firebaseApp.auth();
 
 class LoginRegister extends Component {
   state = {
+    name: '',
     email: '',
     password: '',
     loggedIn: true,
@@ -41,8 +42,13 @@ class LoginRegister extends Component {
           email: '',
           password: ''
         })
-        this.handleLoginRegister()
+        data.user.updateProfile({
+          displayName: this.state.name
+        }).then (() => {
+          this.props.onAddUser({name: data.user.displayName, email: data.user.email})
+        })
       })
+      this.handleLoginRegister()
   }
 
   loginUser = () => {
@@ -65,7 +71,8 @@ class LoginRegister extends Component {
         <div className='login'>
           <div className='app-welcome'>Welcome to Seyanat's Legal Cases Portal</div>
           Please register with your email and a password to access the database.
-        <input placeholder='Your email..' name='email' type='text' value={this.state.email} onChange={this.handleInputChange} />
+          <input placeholder='Name...' name='name' type='text' value={this.state.name} onChange={this.handleInputChange} />
+          <input placeholder='Your email..' name='email' type='text' value={this.state.email} onChange={this.handleInputChange} />
           <input placeholder='Your password..' name='password' type='password' value={this.state.password} onChange={this.handleInputChange} />
           <button onClick={this.registerUser}>Register</button>
           <div style={{ marginTop: '20px', }}>Already have an account?

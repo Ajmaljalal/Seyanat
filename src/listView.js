@@ -20,7 +20,10 @@ class ListView extends Component {
           db.collection('clients').onSnapshot(clients => {
             const newClients = []
             clients.forEach(client => {
-              newClients.push(client.data())
+              newClients.push({
+                  id:client.id, 
+                  data: client.data()
+                })
             })
             this.setState({
               clients: newClients
@@ -28,6 +31,11 @@ class ListView extends Component {
           })
         } else console.log('sign in first')
       }
+
+    deletClient = (id) => {
+        const { db } = this.props;
+        db.collection('clients').doc(id).delete()
+    }
 
     creatTableHeader = () => {
         return (
@@ -49,18 +57,23 @@ class ListView extends Component {
 
     createTableRow = (client, index) => {
         return(
-            <div className='table-row'>
+            <div className='table-row' key={index}>
                 <span className='table-cell table-cell-no'>{index}</span>
-                <span className ='table-cell table-cell-name'>{client.name}</span>
-                <span className ='table-cell table-cell-phone'>{client.phone}</span>
-                <span className ='table-cell table-cell-email'>{client.email}</span>
-                <span className ='table-cell table-cell-service'>{client.service}</span>
-                <span className ='table-cell table-cell-date'>{client.date}</span>
-                <span className ='table-cell table-cell-status'>{client.status}</span>
-                <span className ='table-cell table-cell-assignee'>{client.assignee}</span>
-                <span className ='table-cell table-cell-supervisor'>{client.supervisor}</span>
-                <span className ='table-cell table-cell-docs'>{client.docs}</span>
-                <span className ='table-cell table-cell-remarks'>{client.remarks}</span>
+                <span className ='table-cell table-cell-name'>{client.data.name}</span>
+                <span className ='table-cell table-cell-phone'>{client.data.phone}</span>
+                <span className ='table-cell table-cell-email'>{client.data.email}</span>
+                <span className ='table-cell table-cell-service'>{client.data.service}</span>
+                <span className ='table-cell table-cell-date'>{client.data.date}</span>
+                <span className ='table-cell table-cell-status'>{client.data.status}</span>
+                <span className ='table-cell table-cell-assignee'>{client.data.assignee}</span>
+                <span className ='table-cell table-cell-supervisor'>{client.data.supervisor}</span>
+                <span className ='table-cell table-cell-docs'>{client.data.docs}</span>
+                <span className ='table-cell table-cell-remarks'>{client.data.remarks}</span>
+                <span
+                onClick={()=>this.deletClient(client.id)}
+
+                >X
+                </span>
             </div>
         )
     }
@@ -70,9 +83,9 @@ class ListView extends Component {
         const searchedText = search.trim().toString().toLowerCase()
         if (searchedText) {
             filtered = this.state.clients.filter((client) => {
-                return client.name.toLowerCase() == search || 
-                    client.assignee.toLowerCase() == search || 
-                    client.status.toLowerCase() == search;
+                return client.data.name.toLowerCase() == search || 
+                    client.data.assignee.toLowerCase() == search || 
+                    client.data.status.toLowerCase() == search;
             })
         }
         return (

@@ -21,20 +21,20 @@ class App extends React.Component {
     loggedIn: false,
     clients: null,
     openAddClient: false,
-    currenUser: null
+    currentUser: null
   }
 
   handleLogin = (user) => {
     this.setState({
       loggedIn: true,
-      currenUser: user
+      currentUser: user
     })
   }
 
   handleLogout = () => {
     this.setState({
       loggedIn: false,
-      currenUser: null
+      currentUser: null
     })
   }
 
@@ -47,11 +47,19 @@ class App extends React.Component {
   addClient = (client) => {
     db.collection('clients').add({
       ...client
-    }).then(user =>{
-      console.log(user)
+    }).then(client =>{
+      // console.log(client)
     })
     this.openAddClientModal()
+  }
 
+  addUser = ({name, email}) => {
+    db.collection('users').add({
+      name: name,
+      email: email,
+    }).then((user) =>{
+      // console.log(user)
+    })
   }
 
   renderComponents =()=> {
@@ -59,10 +67,10 @@ class App extends React.Component {
       <div className='app-wrapper'>
         {this.state.loggedIn ? (
           <div className='app-content'>
-            <RightMenu onLogOut={this.handleLogout} onOpenModal={this.openAddClientModal} user={this.state.currenUser} />
-            <ListView db={db} user = {this.state.currenUser}/>
+            <RightMenu onLogOut={this.handleLogout} onOpenModal={this.openAddClientModal} user={this.state.currentUser} />
+            <ListView db={db} user = {this.state.currentUser}/>
           </div>
-        ): <LoginRegister onLogIn={this.handleLogin}/>}
+        ): <LoginRegister onLogIn={this.handleLogin} db={db} onAddUser={this.addUser}/>}
         {this.state.openAddClient ? <AddClient onClose={this.openAddClientModal} onAddClient={this.addClient}/> : null}
       </div>
     )
